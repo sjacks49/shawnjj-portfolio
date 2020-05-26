@@ -26,3 +26,20 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
+
+function randomDuneQuote() {
+    const filenames = [
+        "quote_repeat.jpg",
+        'quote_fear.jpg',
+        'quote_achieve.jpg',
+        'quote_change.jpg',
+    ];
+    // Picks random filename
+    const quote = filenames[Math.floor(Math.random() * filenames.length)];
+    let quoteFile = "<img src='Dune_Quotes/" + quote +"' width='480' height='600' alt='Image of a Dune quote.'>";
+
+    //Adds picture to the page
+    const quoteContainer = document.getElementById('quote_container');
+    quoteContainer.innerHTML = quoteFile;
+
+}

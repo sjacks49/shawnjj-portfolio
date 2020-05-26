@@ -1,24 +1,30 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Shawn's Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
-  </head>
-  <body>
-    <div id="content">
-      <h1>Shawn Jackson's Portfolio</h1>
-      <p>As you can probably see, my name is Shawn Jackson. I'm from Denver, Colorado and attend Xavier University of Louisiana. 
-          This is my first internship, and I'm excited to see what I can learn!</p>
-      <p>This is my father. He's a teacher at my former high school, George Washington.</p>
-      <img src="Shawn_Images/shawn_jackson_gwhs.jpg" width="240" height="300" alt="Picture of my father.">
-      <p>This is my mother. She's also a teacher; she teaches at Florida Pitt Waller.</p>
-      <img src="Shawn_Images/mother_image.jpg" alt="Picture of my mother">
-      
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
-      <div id="greeting-container"></div>
+    <head>
+        <meta charset="UTF-8">
+        <title>Shawn's Portfolio</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js"></script>
+    </head>
+    <div id="background">
+    <body>
+        <div id="content">
+            <h1>Shawn Jackson's Portfolio</h1>
+            <h2>A little about me</h2>
+            <p>As you can probably see, my name is Shawn Jackson. I'm from Denver, Colorado and attend Xavier University of Louisiana. 
+                This is my first internship, and I'm excited to see what I can learn!</p>
+            <p>This is my father. He's a teacher at George Washington High School, where I used to attend.</p>
+            <img src="Shawn_Images/shawn_jackson_gwhs.jpg" width="240" height="300" alt="Picture of my father.">
+            <p>This is my mother. She's also a teacher; she teaches at Florida Pitt Waller.</p>
+            <img src="Shawn_Images/mother_image.jpg" alt="Picture of my mother">
+            <p>Click here to get a random message:</p>
+            <button onclick="addRandomGreeting()">Hello</button>
+            <div id="greeting-container"></div>
+
+            <p>Click below to get a random quote from mu favorite novel/series, Dune!</p>
+            <button onclick="randomDuneQuote()">Quote</button>
+            <div id="quote_container"></div>
+        </div>
+    </body>
     </div>
-  </body>
 </html>
