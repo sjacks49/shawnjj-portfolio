@@ -1,18 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>My Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
-  </head>
-  <body>
-    <div id="content">
-      <h1>My Portfolio</h1>
-      <p>This is my portfolio.</p>
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
-      <div id="greeting-container"></div>
+    <head>
+        <meta charset="UTF-8">
+        <title>Shawn's Portfolio</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js"></script>
+    </head>
+    <div id="background">
+    <body>
+        <div id="content">
+            <h1>Welcome to My Life</h1>
+            <h2>A Little About Me</h2>
+            <img src="Shawn_Images/it_me.jpg" width="240" length="300" alt="Picture on me.">
+            <p>
+                Heyo! My name is Shawn Jackson! I'm from Denver, Colorado and attend Xavier University of Louisiana. 
+                This is my first internship, and I'm excited to see what I can learn! I was orginially a Statistics 
+                major, but after taking my first CS course I quickly fell in love with programming. I intend to 
+                work in Data Science since it presents a nice blend of Statistics and CS. I have two parents, a 
+                sister, and 3 pets (2 dogs and a cat). My favorite book is <b><u>Dune</u></b>, with <b><u>The Name
+                of the Wind</u></b> being a distant second. I also enjoy going to the <a href="Beach.html">beach</a>.
+
+            </p>
+            
+            <p>Click <a href="family.html">here</a> to see read about my family!</p>
+            <p>Only click <a href="baking.html">here</a> if you're brave enough...</p>
+            
+            <p>Lets play a game! Try to guess a random number from 0-10!</p>
+            <label for="NumberInput">Input a Number:</label>
+            <input type="number" id="numberGuess" name="Number"><br><br>
+            <input type="submit" value="Guess" id="guessSubmit" onclick="guessTheNumber()">
+
+            <p>Click below to get a random Dune quote.</p>
+            <button onclick="randomDuneQuote()">Quote</button>
+            <div id="quote_container"></div>
+
+            <p>
+                <a href="https://www.linkedin.com/in/shawn-jackson-45788a1a8">LinkedIn Profile</a>
+                <a href="https://github.com/sjacks49">GitHub Profile</a>
+            </p>
+        </div>
+    </body>
     </div>
-  </body>
 </html>
