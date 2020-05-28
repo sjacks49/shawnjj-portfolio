@@ -17,7 +17,7 @@
  */
 function addRandomGreeting() {
   const greetings =
-      ['Hello there, General Kenobi.', 'English motherf*****! Do you speak it!?', "C'est tragique!", 'My middle name is James.'];
+      ['Hello there, General Kenobi.', 'May the odds be ever in your favor...', "C'est tragique!", 'My middle name is James.'];
 
   // Pick a random greeting.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
@@ -36,7 +36,7 @@ function randomDuneQuote() {
     ];
     // Picks random filename
     const quote = filenames[Math.floor(Math.random() * filenames.length)];
-    let quoteFile = "<img src='Dune_Quotes/" + quote +"' width='480' height='600' alt='Image of a Dune quote.'>";
+    let quoteFile = "<img src='Dune_Quotes/" + quote +"' width='480' height='600' alt='Image of a Dune quote.' class='center'>";
 
     //Adds picture to the page
     const quoteContainer = document.getElementById('quote_container');

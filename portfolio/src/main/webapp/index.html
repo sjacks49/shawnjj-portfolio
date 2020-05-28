@@ -9,9 +9,11 @@
     <div id="background">
     <body>
         <div id="content">
-            <h1>Welcome to My Life</h1>
-            <h2>A Little About Me</h2>
-            <img src="Shawn_Images/it_me.jpg" width="240" length="300" alt="Picture on me.">
+            <div id="header1">
+                <h1>Welcome to My Life</h1>
+            </div>
+            <h2><u>A Little About Me</u></h2>
+            <img src="Shawn_Images/it_me.jpg" width="240" length="300" alt="Picture on me." class="center">
             <p>
                 Heyo! My name is Shawn Jackson! I'm from Denver, Colorado and attend Xavier University of Louisiana. 
                 This is my first internship, and I'm excited to see what I can learn! I was orginially a Statistics 
@@ -28,7 +30,7 @@
             <p>Lets play a game! Try to guess a random number from 0-10!</p>
             <label for="NumberInput">Input a Number:</label>
             <input type="number" id="numberGuess" name="Number"><br><br>
-            <input type="submit" value="Guess" id="guessSubmit" onclick="guessTheNumber()">
+            <input type="submit" value="Guess" id="guessSubmit" onclick="guessTheNumber() ">
 
             <p>Click below to get a random Dune quote.</p>
             <button onclick="randomDuneQuote()">Quote</button>

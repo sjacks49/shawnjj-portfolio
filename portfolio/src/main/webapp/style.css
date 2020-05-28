@@ -17,3 +17,18 @@
     margin-top: 15px;
 }
 
+#header1 {  
+    text-align: center;
+    background-color: lightgray;
+    border: 10px solid;
+    padding: 5px;
+    border-image: url(src/webapp/Shawn_Images/border_image.png);
+    
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
