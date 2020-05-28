@@ -43,3 +43,40 @@ function randomDuneQuote() {
     quoteContainer.innerHTML = quoteFile;
 
 }
+
+var random_number;
+var guess_attempts;
+var first_random_number = true;
+function generateRandomNumber(){
+    random_number = Math.floor(Math.random() * 11)
+    guess_attempts  = 1;
+}
+
+function guessTheNumber() {
+    if (first_random_number){
+        generateRandomNumber();
+        first_random_number = false;
+    }
+    
+    var guessString = document.getElementById("numberGuess").value;
+    var guess = parseInt(guessString, 10);
+
+    console.log(guess + typeof guess);
+    console.log(random_number+ typeof random_number);
+
+    if (guess == random_number){
+        console.log("Original number: " + random_number);
+        alert("Congrats! You guessed the right number in " + guess_attempts + " attemps! A new number has been generated, so feel free to play again!");
+        generateRandomNumber();
+        console.log("New number: " + random_number);
+
+    }
+    else if (guess < random_number){
+        alert("Sorry! Try guessing a bigger number...");
+        guess_attempts++;
+    }
+    else {
+        alert("Sorry! Try guessing a smaller number...");
+        guess_attempts++;
+    }
+}
