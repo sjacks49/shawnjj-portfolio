@@ -23,7 +23,7 @@ function addRandomGreeting() {
         "Do. OR do not. There is no try. -Yoda",
         "Any man's death diminishes me, because I am involved in mankind, and therefore never send to know for whom the bells tolls; it tolls for thee. -John Donne",
         "To be a Negro in this country and to be relatively conscious is to be in a rage almost all the time. - James Baldwin",
-        "Tough times never last. Tough people do -Robert Schuller"];
+        "Tough times never last. Tough people do. -Robert Schuller"];
 
   // Pick a random greeting.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
@@ -67,8 +67,8 @@ function guessTheNumber() {
     var guessString = document.getElementById("numberGuess").value;
     var guess = parseInt(guessString, 10);
 
-    console.log(guess + typeof guess);
-    console.log(random_number+ typeof random_number);
+    console.log("Guess: " + guess + typeof guess);
+    console.log("Actual Number: " + random_number + typeof random_number);
 
     if (guess == random_number){
         console.log("Original number: " + random_number);

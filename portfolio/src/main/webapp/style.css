@@ -1,4 +1,4 @@
-#content {
+#content{
   margin-left: auto;
   margin-right: auto;
   width: 650px;
@@ -10,7 +10,12 @@
 }
 
 #background {
-    background-color: lightblue;
+    background: lightblue;
+    background: radial-gradient(circle, lightblue, white)
+}
+#beach_background {
+    background: rgb(255,19,0);
+    background: radial-gradient(circle, rgba(255,19,0,1) 0%, rgba(255,254,0,0.5900735294117647) 85%);
 }
 
 #quote_container {
@@ -24,7 +29,8 @@
     padding: 5px;    
 }
 
-.center {
+/*Center Images*/
+.center { 
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -36,7 +42,7 @@
   background-color: #333;
 }
 
-/* Navugation Links Style */
+/* Navigation Links Style */
 .topnav a {
   float: left;
   display: block;
@@ -50,4 +56,33 @@
 .topnav a:hover {
   background-color: #ddd;
   color: black;
+}
+
+/*Social Media Buttons*/
+.fa {
+  padding: 20px;
+  font-size: 30px;
+  width: 50px;
+  text-align: center;
+  text-decoration: none;
+  margin: 100px 4px;
+}
+
+.fa:hover {
+    opacity: 0.7;
+}
+
+.fa-linkedin {
+  background: #007bb5;
+  color: white;
+}
+
+.fa-github {
+  background: black;
+  color: white;
+}
+
+.fa-gmail {
+    background: #b13c2c;
+    color: white;
 }
