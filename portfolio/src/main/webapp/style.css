@@ -10,7 +10,7 @@
 }
 
 #background {
-    background-color: lightblue
+    background-color: lightblue;
 }
 
 #quote_container {
@@ -21,9 +21,7 @@
     text-align: center;
     background-color: lightgray;
     border: 10px solid;
-    padding: 5px;
-    border-image: url(src/webapp/Shawn_Images/border_image.png);
-    
+    padding: 5px;    
 }
 
 .center {
@@ -32,3 +30,24 @@
     margin-right: auto;
 }
 
+/* Navigation bar style */
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+/* Navugation Links Style */
+.topnav a {
+  float: left;
+  display: block;
+  color: lightgray;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Link Color Hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}

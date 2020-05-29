@@ -17,7 +17,13 @@
  */
 function addRandomGreeting() {
   const greetings =
-      ['Hello there, General Kenobi.', 'May the odds be ever in your favor...', "C'est tragique!", 'My middle name is James.'];
+      ["You may not control all the events that happen to you, but you can decide not to be reduced by them. -Maya Angelou",
+       "The drums of Africa still beat in my heart. They will not let me rest while there is a single Negro boy or girl without a chance to prove his worth. -Mary McLeod Bethune",
+        "The willow submits to the wind and prospers until one day it is many willows - a wall against the wind. -Frank Herbert", 
+        "Do. OR do not. There is no try. -Yoda",
+        "Any man's death diminishes me, because I am involved in mankind, and therefore never send to know for whom the bells tolls; it tolls for thee. -John Donne",
+        "To be a Negro in this country and to be relatively conscious is to be in a rage almost all the time. - James Baldwin",
+        "Tough times never last. Tough people do -Robert Schuller"];
 
   // Pick a random greeting.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
@@ -48,7 +54,7 @@ var random_number;
 var guess_attempts;
 var first_random_number = true;
 function generateRandomNumber(){
-    random_number = Math.floor(Math.random() * 11)
+    random_number = Math.floor(Math.random() * 101)
     guess_attempts  = 1;
 }
 
