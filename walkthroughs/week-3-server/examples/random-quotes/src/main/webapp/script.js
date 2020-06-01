@@ -68,6 +68,8 @@ function getRandomQuoteUsingArrowFunctions() {
  */
 async function getRandomQuoteUsingAsyncAwait() {
   const response = await fetch('/random-quote');
+  /*console.log("response");*/
   const quote = await response.text();
+  /*console.log("quote");*/
   document.getElementById('quote-container').innerText = quote;
 }

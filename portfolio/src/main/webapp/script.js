@@ -86,3 +86,11 @@ function guessTheNumber() {
         guess_attempts++;
     }
 }
+
+async function fetchFromServer() {
+  const response = await fetch('/data');
+  /*console.log("response");*/
+  const quote = await response.text();
+  /*console.log("quote");*/
+  document.getElementById('server-quote').innerText = quote;
+}
