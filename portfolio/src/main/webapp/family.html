@@ -2,23 +2,32 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Shawn's Family</title>
+        <title>Shawn's Portfolio</title>
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="script.js"></script>
     </head>
 
     <div id="background">
     <body>
         <div id="content">
-        <h1>Welcome to My Life</h1>
-        <h2>Mi Familia</h2>
+        <div id="header1">
+            <h1>Welcome to My Life</h1>
+        </div>
+
+        <div class="topnav">
+            <a href="index.html">About Me</a>
+            <a href="Beach.html">Beach</a>
+        </div>
+        
+        <h2><u>Mi Familia!</u></h2>
         <p>
             This is my father. He's a teacher at George Washington High School, the school I used to attend.
             He was born and raised in Denver and graduated from University of Northern Colorado. After 
             orginally working as an Electrical Engineer, he later got a degree in Elementary Education
             He enjoys playing Madden and is currently trying to learn how to program.
         </p>
-        <img src="Shawn_Images/shawn_jackson_gwhs.jpg" width="240" height="300" alt="Picture of my father.">
+        <img src="Shawn_Images/shawn_jackson_gwhs.jpg" width="240" height="300" alt="Picture of my father." class="center">
 
         <p>
             This is my mother. She's also a teacher; she teaches at Florida Pitt Waller. She was born in 
@@ -27,18 +36,25 @@
             helped former inmates readjust to everyday life. She eventually got her teaching license,
             and the rest is history. 
         </p>
-        <img src="Shawn_Images/mother_image.jpg" alt="Picture of my mother.">
+        <img src="Shawn_Images/mother_image.jpg" alt="Picture of my mother." class="center">
         <p>
             This is my sister. She recently graduated from MSU Denver with a degree in Elementary Education, and an
             endorsement in Culturally Linguistically Diverse Learning. Starting Fall 2020, she will be working as a
             6th grade English teacher at Hamilton Middle School. She enjoys finding new ways to do her make-up and 
             and scrolling through social media.
         </p>
-        <img src="Shawn_Images/sister.jpg" width="240" height="300" alt="Picture of my sister.">
+        <img src="Shawn_Images/sister.jpg" width="240" height="300" alt="Picture of my sister." class="center">
 
-        <p>Click here to get a random message:</p>
-        <button onclick="addRandomGreeting()">Hello</button>
+        <p>Click here see the favorite quotes from my family:</p>
+        <button onclick="addRandomGreeting()">Quote</button>
         <div id="greeting-container"></div>
+
+        <p>
+            <a href="https://www.linkedin.com/in/shawn-jackson-45788a1a8" class="fa fa-linkedin"></a>
+            <a href="https://github.com/sjacks49" class="fa fa-github "></a>
+            <a href="mailto:shawnjj@google.com" class="fa fa-gmail ">Email</a>
+        </p>
+
         </div>
     </body>
     </div>
