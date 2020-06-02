@@ -33,6 +33,7 @@ public class DataServlet extends HttpServlet {
     //response.getWriter().println("<h1>Hello Shawn!</h1>");
 
     ArrayList<String> comments = new ArrayList<String>();
+
     comments.add("You can tell the tree by the fruit it bears. ");
     comments.add("You see it through what the organization is delivering as far as a concrete program. ");
     comments.add("If the tree's fruit sours or grows brackish, then the time has come to chop it down - bury it and walk over it and plant new seeds. ");
@@ -44,6 +45,26 @@ public class DataServlet extends HttpServlet {
     response.setContentType("application/json;");
     response.getWriter().println(json_text);
 
+  }
+
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+      String text = getParameter(request, "text-input", "");
+      String rb_response = request.getParameter("site-evaluation");
+
+      String[] response_tokens = text.split(" ");
+
+      
+      response.setContentType("text/html");
+      response.getWriter().println("Thanks for your Response: " + rb_response + "<br></br>");
+      response.getWriter().println(Arrays.toString(response_tokens));
+  }
+
+  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+    String value = request.getParameter(name);
+    if (value == null) {
+      return defaultValue;
+    }
+    return value;
   }
 }
 
