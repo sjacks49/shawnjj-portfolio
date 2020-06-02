@@ -48,6 +48,21 @@
             <button onclick="fetchFromServer()">Fetch</button>
             <div id="server-quote"></div>
 
+            <form action="text" method="POST">
+                <p>How did you like the site?</p>
+                <input type="radio" id="perfect" name="site-evaluation" value="perfect">
+                <input type="radio" id="servicable" name="site-evaluation" value="servicable">
+                <input type="radio" id="needs-improvements" name="site-evaluation" value="servicable">
+                <label for="perfect">It's Perfect!</label>
+                <label for="serviable">It's Servicable</label>
+                <label for="needs-improvements">It Could Use Some Improvements</label>
+                <br></br>
+                <br></br>
+                <p>If you have and questions or comments, enter them below!</p>
+                <textarea name="text-input"></textarea>
+
+                
+
             <p>
                 <a href="https://www.linkedin.com/in/shawn-jackson-45788a1a8" class="fa fa-linkedin"></a>
                 <a href="https://github.com/sjacks49" class="fa fa-github "></a>
