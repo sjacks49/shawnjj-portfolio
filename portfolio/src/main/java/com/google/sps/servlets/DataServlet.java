@@ -55,7 +55,7 @@ public class DataServlet extends HttpServlet {
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
-    Query query = new Query("Comment;");
+    Query query = new Query("Comment");
 
     PreparedQuery results = datastore.prepare(query);
     List<String> load_comments = new ArrayList<>();
@@ -68,7 +68,7 @@ public class DataServlet extends HttpServlet {
       String comment = (String) survey.getProperty("Question/Comment");
       //long timestamp = (long) survey.getProperty("timestamp");
 
-      load_comments.add("testing");
+      load_comments.add(comment);
     }
     //load_comments.add("comment");
 
