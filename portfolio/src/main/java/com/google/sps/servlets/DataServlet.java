@@ -14,13 +14,19 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.gson.*;
 import java.io.IOException;
+import java.util.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.*;
-import com.google.gson.*;
 
 
 
@@ -32,6 +38,7 @@ public class DataServlet extends HttpServlet {
     //response.setContentType("text/html;");
     //response.getWriter().println("<h1>Hello Shawn!</h1>");
 
+    /*
     ArrayList<String> comments = new ArrayList<String>();
 
     comments.add("You can tell the tree by the fruit it bears. ");
@@ -44,19 +51,56 @@ public class DataServlet extends HttpServlet {
 
     response.setContentType("application/json;");
     response.getWriter().println(json_text);
+    */
 
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+
+    Query query = new Query("Comment;");
+
+    PreparedQuery results = datastore.prepare(query);
+    List<String> load_comments = new ArrayList<>();
+    System.out.println(results);
+
+    for (Entity survey : results.asIterable()) {
+      System.out.println(survey);
+
+      long id = survey.getKey().getId();
+      String comment = (String) survey.getProperty("Question/Comment");
+      //long timestamp = (long) survey.getProperty("timestamp");
+
+      load_comments.add("testing");
+    }
+    //load_comments.add("comment");
+
+    Gson gson = new Gson();
+
+    response.setContentType("application/json");
+    response.getWriter().println(gson.toJson(load_comments));
   }
 
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-      String text = getParameter(request, "text-input", "");
+      String name = getParameter(request, "name-input", "");
       String rb_response = request.getParameter("site-evaluation");
+      String text = getParameter(request, "text-input", "");
+      long timestamp = System.currentTimeMillis();
+    
+      Entity surveyEntity = new Entity("Comment");
+      surveyEntity.setProperty("Name", name);
+      surveyEntity.setProperty("Evaluation", rb_response);
+      surveyEntity.setProperty("Question/Comment", text);
+      surveyEntity.setProperty("TimeStamp", timestamp);
+      
+      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+      datastore.put(surveyEntity);
+      
 
       String[] response_tokens = text.split(" ");
 
       
       response.setContentType("text/html");
-      response.getWriter().println("Thanks for your Response: " + rb_response + "<br></br>");
-      response.getWriter().println(Arrays.toString(response_tokens));
+      response.getWriter().println("Thanks for Your Evaluation " + name +": " + rb_response + "<br></br>");
+      response.getWriter().println(Arrays.toString(response_tokens) + "<br></br>");
+      response.getWriter().println("<a href='index.html'>Return to Home page</a>");
   }
 
   private String getParameter(HttpServletRequest request, String name, String defaultValue) {

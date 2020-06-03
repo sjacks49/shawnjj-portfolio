@@ -91,10 +91,17 @@ async function fetchFromServer() {
   const response = await fetch('/data');
   const json = await response.json();
   console.log(json);
+  
+  /*
   document.getElementById("server-quote").innerText = json[0]+json[1]+json[2]+"\n"+json[3];
-
-  /*console.log("response");
+  */
+  
+  document.getElementById("server-quote").innerText = json;
+  
+  /*
+  console.log("response");
   const quote = await response.text();
-  /*console.log("quote");
-  document.getElementById('server-quote').innerText = quote;*/
+  console.log("quote");
+  document.getElementById('server-quote').innerText = quote;
+  */
 }

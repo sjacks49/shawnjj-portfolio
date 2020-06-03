@@ -1,0 +1,44 @@
+<!doctype HTML>
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Shawn's Portfolio</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="script.js"></script>
+    </head>
+    <body>
+    <div id="background">
+        <div id="content">
+            <h1>Survey</h1>
+            <form action="/data" method="POST">
+            <label for="name-input">Please Enter Your Name:</label><br></br>
+                <input type="text" id="name-input" name="name-input">
+                <p>How did you like the site?</p>
+                <input type="radio" id="perfect" name="site-evaluation" value="perfect"> 
+                <label for="perfect">It's Perfect!</label><br></br>
+                <input type="radio" id="servicable" name="site-evaluation" value="servicable">
+                <label for="serviable">It's Servicable</label><br></br>
+
+                <input type="radio" id="needs-improvements" name="site-evaluation" value="needs-improvements">
+                <label for="needs-improvements">Needs Improvements</label>
+                <br></br>
+                <p>If you have and questions or comments, enter them below!</p>
+                <textarea name="text-input"></textarea>
+
+                <input type="submit" />
+            </form>
+
+                
+
+            <p>
+                <a href="https://www.linkedin.com/in/shawn-jackson-45788a1a8" class="fa fa-linkedin"></a>
+                <a href="https://github.com/sjacks49" class="fa fa-github "></a>
+                <a href="mailto:shawnjj@google.com" class="fa fa-gmail ">Email</a>
+            </p>
+        </div>
+        
+    </div>
+    </body>
+</html>
