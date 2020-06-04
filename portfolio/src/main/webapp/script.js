@@ -86,3 +86,54 @@ function guessTheNumber() {
         guess_attempts++;
     }
 }
+
+async function fetchFromServer(max_comments) {
+  const response = await fetch('/data');
+  const json_comments = await response.json();
+  console.log(json_comments);
+  var max = Math.min(parseInt(max_comments), json_comments.length);
+
+  const commentListElement = document.getElementById("server-quote");
+
+  while (commentListElement.hasChildNodes()) {  
+    commentListElement.removeChild(commentListElement.firstChild);
+  }
+
+  
+  
+  var output = "";
+  for(var ndx = 0; ndx < max; ndx++){
+    commentListElement.appendChild(createCommentElement(json_comments[ndx]));
+
+  }
+  
+  
+}
+
+async function deleteComment(comment) {
+    const params = new URLSearchParams();
+    params.append('id', comment.id);
+    await fetch('/delete-data', {method:'POST', body: params});
+}
+
+function createCommentElement(comment) {
+  const listElement = document.createElement('li');
+  listElement.className = 'comments';
+
+  const commentElement = document.createElement('span');
+  commentElement.insertAdjacentText("beforeend", "");
+  commentElement.innerText = comment.comment;
+
+  const deleteButtonElement = document.createElement('button');
+  deleteButtonElement.innerText = 'Delete';
+  deleteButtonElement.addEventListener('click', () => {
+    deleteComment(comment);
+
+    // Remove the comment from the DOM.
+    listElement.remove();
+  });
+
+  listElement.appendChild(commentElement);
+  listElement.appendChild(deleteButtonElement);
+  return listElement;
+}

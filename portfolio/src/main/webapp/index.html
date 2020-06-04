@@ -31,8 +31,10 @@
 
             </p>
             
-            <p>Click <a href="family.html">here</a> to see read about my family! And only click <a href="baking.html">here</a>
-             if you're brave enough...</p>
+            <p>
+                Click <a href="family.html">here</a> to read about my family! And only click <a href="baking.html">here</a>
+                if you're brave enough...
+            </p>
             
             
 
@@ -44,6 +46,19 @@
             <p>Click below to get a random Dune quote.</p>
             <button onclick="randomDuneQuote()">Quote</button>
             <div id="quote_container"></div>
+
+            <p>If you would like to see other peoples comments enter the number of comments (between 1-5) you would like to see.</p>
+            <label for="max-comments">Number of Comments:</label>
+            <input type="number" name="max-comments" min="1" max="5" value="1" id="max_comments" 
+                onchange="fetchFromServer(document.getElementById('max_comments').value)"><br></br>
+
+            <div id="server-quote"></div></br>
+
+            <p>
+                If you have time, please fill out a quick <a href="survey.html">survey</a>!
+            </p>
+
+                
 
             <p>
                 <a href="https://www.linkedin.com/in/shawn-jackson-45788a1a8" class="fa fa-linkedin"></a>
