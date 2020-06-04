@@ -27,6 +27,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.sps.data.Comment;
 
 
 
@@ -35,42 +36,28 @@ import javax.servlet.http.HttpServletResponse;
 public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    //response.setContentType("text/html;");
-    //response.getWriter().println("<h1>Hello Shawn!</h1>");
-
-    /*
-    ArrayList<String> comments = new ArrayList<String>();
-
-    comments.add("You can tell the tree by the fruit it bears. ");
-    comments.add("You see it through what the organization is delivering as far as a concrete program. ");
-    comments.add("If the tree's fruit sours or grows brackish, then the time has come to chop it down - bury it and walk over it and plant new seeds. ");
-    comments.add("- Huey P. Newton");
-
-    Gson gson = new Gson();
-    String json_text = gson.toJson(comments);
-
-    response.setContentType("application/json;");
-    response.getWriter().println(json_text);
-    */
+    
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
-    Query query = new Query("Comment");
+    Query query = new Query("Comment").addSort("TimeStamp", SortDirection.ASCENDING);
 
     PreparedQuery results = datastore.prepare(query);
-    List<String> load_comments = new ArrayList<>();
-    System.out.println(results);
-
+    List<Comment> load_comments = new ArrayList<>();
+    
     for (Entity survey : results.asIterable()) {
-      System.out.println(survey);
-
+      
       long id = survey.getKey().getId();
+      String name = (String) survey.getProperty("Name");
+      String evaluation = (String) survey.getProperty("Evaluation");
       String comment = (String) survey.getProperty("Question/Comment");
-      //long timestamp = (long) survey.getProperty("timestamp");
+      long timestamp = (long) survey.getProperty("TimeStamp");
 
-      load_comments.add(comment);
+      Comment commentObject = new Comment(id, name, evaluation, comment, timestamp);
+
+      load_comments.add(commentObject);
     }
-    //load_comments.add("comment");
+
 
     Gson gson = new Gson();
 
@@ -81,26 +68,21 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
       String name = getParameter(request, "name-input", "");
       String rb_response = request.getParameter("site-evaluation");
-      String text = getParameter(request, "text-input", "");
+      String comment = getParameter(request, "text-input", "");
       long timestamp = System.currentTimeMillis();
+
     
       Entity surveyEntity = new Entity("Comment");
       surveyEntity.setProperty("Name", name);
       surveyEntity.setProperty("Evaluation", rb_response);
-      surveyEntity.setProperty("Question/Comment", text);
+      surveyEntity.setProperty("Question/Comment", comment);
       surveyEntity.setProperty("TimeStamp", timestamp);
       
       DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
       datastore.put(surveyEntity);
       
+      response.sendRedirect("/index.html");
 
-      String[] response_tokens = text.split(" ");
-
-      
-      response.setContentType("text/html");
-      response.getWriter().println("Thanks for Your Evaluation " + name +": " + rb_response + "<br></br>");
-      response.getWriter().println(Arrays.toString(response_tokens) + "<br></br>");
-      response.getWriter().println("<a href='index.html'>Return to Home page</a>");
   }
 
   private String getParameter(HttpServletRequest request, String name, String defaultValue) {

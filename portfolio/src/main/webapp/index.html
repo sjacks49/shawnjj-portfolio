@@ -20,7 +20,7 @@
             </div>
 
             <h2><u>A Little About Me</u></h2>
-            <!--<img src="Shawn_Images/it_me.jpg" width="240" length="300" alt="Picture on me." class="center"> -->
+            <img src="Shawn_Images/it_me.jpg" width="240" length="300" alt="Picture on me." class="center">
             <p>
                 Heyo! My name is Shawn Jackson! I'm from Denver, Colorado and attend Xavier University of Louisiana.
                 This is my first internship, and I'm excited to see what I can learn! I was orginially a Statistics 
@@ -47,8 +47,12 @@
             <button onclick="randomDuneQuote()">Quote</button>
             <div id="quote_container"></div>
 
-            <button onclick="fetchFromServer()">Fetch</button>
-            <div id="server-quote"></div>
+            <p>If you would like to see other peoples comments enter the number of comments (between 1-5) you would like to see.</p>
+            <label for="max-comments">Number of Comments:</label>
+            <input type="number" name="max-comments" min="1" max="5" value="1" id="max_comments" 
+                onchange="fetchFromServer(document.getElementById('max_comments').value)"><br></br>
+
+            <div id="server-quote"></div></br>
 
             <p>
                 If you have time, please fill out a quick <a href="survey.html">survey</a>!
