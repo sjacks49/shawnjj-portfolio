@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="script.js"></script>
+        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     </head>
     <body>
     <div id="background">
@@ -20,7 +21,7 @@
             </div>
 
             <h2><u>A Little About Me</u></h2>
-            <img src="Shawn_Images/it_me.jpg" width="240" length="300" alt="Picture on me." class="center">
+                <img src="Shawn_Images/it_me.jpg" width="240" length="300" alt="Picture on me." class="center">
             <p>
                 Heyo! My name is Shawn Jackson! I'm from Denver, Colorado and attend Xavier University of Louisiana.
                 This is my first internship, and I'm excited to see what I can learn! I was orginially a Statistics 
@@ -54,19 +55,70 @@
 
             <div id="server-quote"></div></br>
 
+            <button onclick="deleteAll()">Delete All Comments</button>
+
             <p>
                 If you have time, please fill out a quick <a href="survey.html">survey</a>!
             </p>
+            
+            <p>Want to see what others think of the site? Click below.</p>
+            <button onclick="generateGraph(siteEvaluationData())">Generate Graph</button>
+            <button onclick="deleteGraph()">Delete Graph</button>
+            <div id="chartContainer"></div>
 
-                
-
+            
+            
             <p>
                 <a href="https://www.linkedin.com/in/shawn-jackson-45788a1a8" class="fa fa-linkedin"></a>
                 <a href="https://github.com/sjacks49" class="fa fa-github "></a>
                 <a href="mailto:shawnjj@google.com" class="fa fa-gmail ">Email</a>
             </p>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+
         </div>
         
     </div>
     </body>
+
+<script type="text/javascript">
+
+function generateGraph(data) {
+    
+    var p = Promise.resolve(data);
+    p.then(function(v){
+
+        var chart = new CanvasJS.Chart("chartContainer", {
+		title:{
+			text: "Site Evaluations"              
+		},
+	    data: [              
+		    {
+		    type: "column",
+		    dataPoints: 
+            [
+				{ label: "Perfect",  y: v[0]  },
+			    { label: "Servicable", y: v[1] },
+			    { label: "Needs Improvements", y: v[2] },
+		    ]
+	        }
+		]
+	    });
+
+	chart.render();
+        
+    });
+    
+}
+
+function deleteGraph(){
+    const graph = document.getElementById('chartContainer');
+    graph.innerHTML="";
+
+}
+</script>
+
+
 </html>

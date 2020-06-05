@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 /**
  * Adds a random greeting to the page.
  */
@@ -89,40 +90,39 @@ function guessTheNumber() {
 
 async function fetchFromServer(max_comments) {
   const response = await fetch('/data');
-  const json_comments = await response.json();
-  console.log(json_comments);
-  var max = Math.min(parseInt(max_comments), json_comments.length);
+  const json_surveys = await response.json();
+  console.log(json_surveys);
+
+  var max = Math.min(parseInt(max_comments), json_surveys.length);
 
   const commentListElement = document.getElementById("server-quote");
 
   while (commentListElement.hasChildNodes()) {  
     commentListElement.removeChild(commentListElement.firstChild);
   }
-
-  
   
   var output = "";
   for(var ndx = 0; ndx < max; ndx++){
-    commentListElement.appendChild(createCommentElement(json_comments[ndx]));
+    commentListElement.appendChild(createCommentElement(json_surveys[ndx]));
 
   }
   
   
 }
 
-async function deleteComment(comment) {
+async function deleteComment(survey) {
     const params = new URLSearchParams();
-    params.append('id', comment.id);
+    params.append('id', survey.id);
     await fetch('/delete-data', {method:'POST', body: params});
 }
 
-function createCommentElement(comment) {
+function createCommentElement(survey) {
   const listElement = document.createElement('li');
   listElement.className = 'comments';
 
   const commentElement = document.createElement('span');
   commentElement.insertAdjacentText("beforeend", "");
-  commentElement.innerText = comment.comment;
+  commentElement.innerText = survey.comment;
 
   const deleteButtonElement = document.createElement('button');
   deleteButtonElement.innerText = 'Delete';
@@ -136,4 +136,41 @@ function createCommentElement(comment) {
   listElement.appendChild(commentElement);
   listElement.appendChild(deleteButtonElement);
   return listElement;
+}
+
+async function deleteAll() {
+    const response = await fetch('/data');
+    const json_surveys = await response.json();
+
+    json_surveys.forEach((survey) => {
+        deleteComment(survey);
+    });
+}
+
+
+
+async function siteEvaluationData() {
+    const response = await fetch('/data');
+    const commentObjects = await response.json();
+
+    var perfectData = 0;
+    var servicabledata = 0;
+    var improvementData = 0;
+
+    commentObjects.forEach((survey) => {
+        switch(survey.evaluation) {
+            case 'perfect':
+                perfectData++;
+                break;
+            case 'servicable':
+                servicabledata++;
+                break;
+            case 'needs-improvements':
+                improvementData++;
+                break;
+
+        }
+    })
+
+    return [perfectData, servicabledata, improvementData];
 }
