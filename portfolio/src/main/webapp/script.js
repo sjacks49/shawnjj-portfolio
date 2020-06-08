@@ -176,8 +176,17 @@ async function siteEvaluationData() {
 }
 
 function createMap() {
-  const map = new google.maps.Map(
-      document.getElementById('map'),
-      {center: {lat: 37.422, lng: -122.084}, zoom: 16});
+    // Google Campus Coordinates
+    var latitude_default = 37.422;
+    var longitude_default = -122.084;
+    var zoom_default = 16
+
+    const map = new google.maps.Map(
+        document.getElementById('map'),
+        {
+            center: {lat: latitude_default, lng: longitude_default}, 
+            zoom: zoom_default
+        }
+    );
 }
 
