@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="script.js"></script>
+
+</head>
+<body>
+<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+</body>
+
+<script type="text/javascript">
+
+window.onload = function () {
+	const data = siteEvaluationData();
+    
+    var p = Promise.resolve(data);
+    p.then(function(v){
+        console.log("NUmbers: " + v)
+
+        var chart = new CanvasJS.Chart("chartContainer", {
+		title:{
+			text: "Site Evaluations"              
+		},
+	    data: [              
+		    {
+		    type: "column",
+		    dataPoints: 
+            [
+				{ label: "Perfect",  y: v[0]  },
+			    { label: "Servicable", y: v[1] },
+			    { label: "Needs Improvements", y: v[2] },
+		    ]
+	        }
+		]
+	    });
+
+	chart.render();
+        
+    });
+
+    /*
+    console.log("Data: " + data);
+    console.log("Perfect: " + data[0]);
+    */
+
+    
+}
+</script>
+</html>
