@@ -18,13 +18,15 @@
  */
 function addRandomGreeting() {
   const greetings =
-      ["You may not control all the events that happen to you, but you can decide not to be reduced by them. -Maya Angelou",
-       "The drums of Africa still beat in my heart. They will not let me rest while there is a single Negro boy or girl without a chance to prove his worth. -Mary McLeod Bethune",
+      [
+        "You may not control all the events that happen to you, but you can decide not to be reduced by them. -Maya Angelou",
+        "The drums of Africa still beat in my heart. They will not let me rest while there is a single Negro boy or girl without a chance to prove his worth. -Mary McLeod Bethune",
         "The willow submits to the wind and prospers until one day it is many willows - a wall against the wind. -Frank Herbert", 
         "Do. OR do not. There is no try. -Yoda",
         "Any man's death diminishes me, because I am involved in mankind, and therefore never send to know for whom the bells tolls; it tolls for thee. -John Donne",
         "To be a Negro in this country and to be relatively conscious is to be in a rage almost all the time. - James Baldwin",
-        "Tough times never last. Tough people do. -Robert Schuller"];
+        "Tough times never last. Tough people do. -Robert Schuller"
+      ];
 
   // Pick a random greeting.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
@@ -176,17 +178,127 @@ async function siteEvaluationData() {
 }
 
 function createMap() {
-    // Google Campus Coordinates
-    var latitude_default = 37.422;
-    var longitude_default = -122.084;
-    var zoom_default = 16
+    // New Orleans Coordinates
+    var latitude_default = 29.9511;
+    var longitude_default = -90.0715;
+    //Map Default Settings
+    var zoom_default = 13;
+    var mapType_default = "hybird";
+    var dark_mode = [
+            {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
+            {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
+            {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
+            {
+              featureType: 'administrative.locality',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'poi',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'geometry',
+              stylers: [{color: '#263c3f'}]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#6b9a76'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'geometry',
+              stylers: [{color: '#38414e'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'geometry.stroke',
+              stylers: [{color: '#212a37'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#9ca5b3'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry',
+              stylers: [{color: '#746855'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry.stroke',
+              stylers: [{color: '#1f2835'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#f3d19c'}]
+            },
+            {
+              featureType: 'transit',
+              elementType: 'geometry',
+              stylers: [{color: '#2f3948'}]
+            },
+            {
+              featureType: 'transit.station',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'geometry',
+              stylers: [{color: '#17263c'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#515c6d'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.stroke',
+              stylers: [{color: '#17263c'}]
+            }
+          ]
 
     const map = new google.maps.Map(
         document.getElementById('map'),
         {
             center: {lat: latitude_default, lng: longitude_default}, 
-            zoom: zoom_default
+            zoom: zoom_default,
+            mapTypeID: mapType_default,
+            styles: dark_mode
         }
     );
+
+    //Generate markers for places to eat in NOLA
+    
+    var bayouHW_Coords = {lat: 29.946270, lng: -90.112960};
+    var camelliaG_Coords = {lat: 29.943760, lng: -90.133812};
+    var mikimoto_Coords = {lat: 29.962280, lng: -90.113220};
+    var juansFB_Coords = {lat: 29.973780, lng: -90.100740};
+
+    const bayouHW = createMarker(bayouHW_Coords, map, "Bayou Hot Wings");
+    const camelliaG =  createMarker(camelliaG_Coords, map, "Camellia Grill");
+    const mikimoto = createMarker(mikimoto_Coords, map, "Mikimotos");
+    const juansFB = createMarker(juansFB_Coords, map, "Juan's Flying Burrito");
+    
 }
+
+//Generates a marker for the given map
+function createMarker(coordinates, map, title) {
+
+    var marker = new google.maps.Marker({
+        position: coordinates,
+        map: map,
+        title: title,
+    });
+
+    return marker;
+}
+
 
