@@ -329,36 +329,18 @@ function createMap() {
     });
         
     //Generate markers for places in NOLA
-    var bayouHW_Coords = {lat: 29.946270, lng: -90.112960};
-    var camelliaG_Coords = {lat: 29.943760, lng: -90.133812};
-    var mikimoto_Coords = {lat: 29.962280, lng: -90.113220};
-    var juansFB_Coords = {lat: 29.973780, lng: -90.100740};
-    var citypark_Coords = {lat: 29.991908, lng:-90.097360};
-    var chilis_Coords = {lat: 30.005930, lng: -90.178660};
-    var lighthouse_Coords = {lat: 30.030910, lng: -90.059390};
-    var BN_Coords = {lat: 29.905310, lng: -90.068480};
-    var GamingC_Coords = {lat: 29.948310, lng: -90.131360};
- 
-    const bayouHW = createMarker(bayouHW_Coords, map, "Bayou Hot Wings", "");
-    const camelliaG =  createMarker(camelliaG_Coords, map, "Camellia Grill", "");
-    const mikimoto = createMarker(mikimoto_Coords, map, "Mikimotos", "");
-    const juansFB = createMarker(juansFB_Coords, map, "Juan's Flying Burrito", "");
-    const citypark = createMarker(citypark_Coords, map, "City Park Track", "");
-    const chilis = createMarker(chilis_Coords, map, "Chili's Bar and Grill", "");
-    const lighthouse = createMarker(lighthouse_Coords, map, "Lighthouse", "");
-    const barnesAndNobels = createMarker(BN_Coords, map, "Barnes and Nobels", "");
-    const gamingCafe = createMarker(GamingC_Coords, map, "d4 Gaming Cafe", "");
 
+    generateMarkers(map);
 }
 
 //Generates a marker for the given map
-function createMarker(coordinates, map, title, info) {
+function createMarker(coordinates, map, name, info) {
 
     //Create marker
     var marker = new google.maps.Marker({
         position: coordinates,
         map: map,
-        title: title,
+        title: name,
     });
 
     //Create Info Window
@@ -376,11 +358,16 @@ function createMarker(coordinates, map, title, info) {
     return marker;
 }
 
-async function getMarkers(map) {
+async function generateMarkers(map) {
     const response = await fetch("/place-data");
     const placeList = await response.json();
-
+    
     placeList.forEach((place) => {
+        // each place object has a latitude, longitude, name, and description
+        console.log(place);
+        var coordinates = {lat: place.lat, lng: place.lng};
+
+        createMarker(coordinates, map, place.name, place.description);
     })
 }
 

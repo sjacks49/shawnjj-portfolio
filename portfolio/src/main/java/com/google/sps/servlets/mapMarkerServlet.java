@@ -37,16 +37,16 @@ public class mapMarkerServlet extends HttpServlet {
         Scanner scan = new Scanner(getServletContext().getResourceAsStream("/WEB-INF/places.csv"));
         while (scan.hasNextLine()) {
             String line = scan.nextLine();
-            String tokens = line.split(",");
+            String[] tokens = line.split(",");
 
-            double lat = (double) tokens[0];
-            double lng = (double) tokens[1];
+            double lat = Double.parseDouble(tokens[0]);
+            double lng = Double.parseDouble(tokens[1]);
             String name = tokens[2];
             String description = tokens[3];
 
             places.add(new place(lat, lng, name, description));
         }
-        scanner.close();
+        scan.close();
     }
 
     @Override
