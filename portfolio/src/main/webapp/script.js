@@ -275,19 +275,84 @@ function createMap() {
         }
     );
 
-    //Generate markers for places to eat in NOLA
+    //Add Search Bar to Map
+    var input = document.getElementById('pac-input');
+    var searchBox = new google.maps.places.SearchBox(input);
+    map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(input);
+
+    //Search Bar Functionality
+    var markers = [];
+    searchBox.addListener('places_changed', function() {
+        var places = searchBox.getPlaces();
+
+        if (places.length == 0) {
+            return;
+        }
+
+        //Clear old markers.
+        markers.forEach(function(marker) {
+            marker.setMap(null);
+        });
+        markers = [];
+
+        // Get the icon, name, and location.
+        var bounds = new google.maps.LatLngBounds();
+        places.forEach(function(place) {
+            if (!place.geometry) {
+                console.log("Returned place contains no geometry");
+                return;
+            }
+            var icon = {
+            url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(25, 25)
+            };
+
+            // Create a marker
+            markers.push(new google.maps.Marker({
+                map: map,
+                icon: icon,
+                title: place.name,
+                position: place.geometry.location
+            }));
+
+            if (place.geometry.viewport) {
+                // Only geocodes have viewport.
+                bounds.union(place.geometry.viewport);} 
+            else {
+                bounds.extend(place.geometry.location);
+            }
+        });
+        map.fitBounds(bounds);
+    });
+        
+    //Generate markers for places in NOLA
     
     var bayouHW_Coords = {lat: 29.946270, lng: -90.112960};
     var camelliaG_Coords = {lat: 29.943760, lng: -90.133812};
     var mikimoto_Coords = {lat: 29.962280, lng: -90.113220};
     var juansFB_Coords = {lat: 29.973780, lng: -90.100740};
+    var citypark_Coords = {lat: 29.991908, lng:-90.097360};
+    var chilis_Coords = {lat: 30.005930, lng: -90.178660};
+    var lighthouse_Coords = {lat: 30.030910, lng: -90.059390};
+    var BN_Coords = {lat: 29.905310, lng: -90.068480};
+    var GamingC_Coords = {lat: 29.948310, lng: -90.131360};
 
     const bayouHW = createMarker(bayouHW_Coords, map, "Bayou Hot Wings");
     const camelliaG =  createMarker(camelliaG_Coords, map, "Camellia Grill");
     const mikimoto = createMarker(mikimoto_Coords, map, "Mikimotos");
     const juansFB = createMarker(juansFB_Coords, map, "Juan's Flying Burrito");
-    
+    const citypark = createMarker(citypark_Coords, map, "City Park Track");
+    const chilis = createMarker(chilis_Coords, map, "Chili's Bar and Grill");
+    const lighthouse = createMarker(lighthouse_Coords, map, "Lighthouse");
+    const barnesAndNobels = createMarker(BN_Coords, map, "Barnes and Nobels");
+    const gamingCafe = createMarker(GamingC_Coords, map, "d4 Gaming Cafe");
+
 }
+
+
 
 //Generates a marker for the given map
 function createMarker(coordinates, map, title) {
@@ -296,6 +361,12 @@ function createMarker(coordinates, map, title) {
         position: coordinates,
         map: map,
         title: title,
+    });
+
+    //OnClick Listener
+    marker.addListener('click', function() {
+        map.setZoom(18);
+        map.setCenter(marker.getPosition());
     });
 
     return marker;
