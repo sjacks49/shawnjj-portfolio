@@ -14,13 +14,13 @@
 
 package com.google.sps.Data;
 
-public class place {
+public class Place {
     private double lat;
     private double lng;
     private String name;
     private String description;
 
-    public place(double lat, double lng, String name, String description) {
+    public Place(double lat, double lng, String name, String description) {
         this.lat = lat;
         this.lng = lng;
         this.name =name;

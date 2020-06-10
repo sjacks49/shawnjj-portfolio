@@ -298,16 +298,23 @@ function createMap() {
         // Get the icon, name, and location.
         var bounds = new google.maps.LatLngBounds();
         places.forEach(function(place) {
+
+            var icon_size_default = 71;
+            var icon_origin_default = 0;
+            var icon_anchor_baseWidth = 17;
+            var icon_anchor_baseHeight = 37;
+            var search_scale_default = 25;
+
             if (!place.geometry) {
                 console.log("Returned place contains no geometry");
                 return;
             }
             var icon = {
             url: place.icon,
-            size: new google.maps.Size(71, 71),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(17, 34),
-            scaledSize: new google.maps.Size(25, 25)
+            size: new google.maps.Size(icon_size_default, icon_size_default),
+            origin: new google.maps.Point(icon_origin_default, icon_origin_default),
+            anchor: new google.maps.Point(icon_anchor_baseWidth, icon_anchor_baseHeight),
+            scaledSize: new google.maps.Size(search_scale_default, search_scale_default)
             };
 
             // Create a marker

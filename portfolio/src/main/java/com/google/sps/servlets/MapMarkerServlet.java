@@ -14,7 +14,7 @@
 
 package com.google.sps.servlets;
 
-import com.google.sps.Data.place;
+import com.google.sps.Data.Place;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,8 +27,8 @@ import javax.servlet.http.HttpServletResponse;
 
 // Returns a json object with coordinates, name, and description of the place
 @WebServlet("/place-data")
-public class mapMarkerServlet extends HttpServlet {
-    private ArrayList<place> places;
+public class MapMarkerServlet extends HttpServlet {
+    private ArrayList<Place> places;
 
     @Override
     public void init() {
@@ -44,7 +44,7 @@ public class mapMarkerServlet extends HttpServlet {
             String name = tokens[2];
             String description = tokens[3];
 
-            places.add(new place(lat, lng, name, description));
+            places.add(new Place(lat, lng, name, description));
         }
         scan.close();
     }
