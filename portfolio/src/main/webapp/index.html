@@ -78,8 +78,6 @@
             </p>
             <br></br>
             <br></br>
-            <br></br>
-            <br></br>
 
         </div>
         
@@ -89,6 +87,7 @@
 <script type="text/javascript">
 
 function generateGraph(data) {
+    document.getElementById("chartContainer").style.height = "300px";
     
     var p = Promise.resolve(data);
     p.then(function(v){
@@ -119,7 +118,7 @@ function generateGraph(data) {
 function deleteGraph(){
     const graph = document.getElementById('chartContainer');
     graph.innerHTML="";
-
+    graph.style.height = "0px";
 }
 </script>
 

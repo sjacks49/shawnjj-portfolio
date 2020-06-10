@@ -18,13 +18,15 @@
  */
 function addRandomGreeting() {
   const greetings =
-      ["You may not control all the events that happen to you, but you can decide not to be reduced by them. -Maya Angelou",
-       "The drums of Africa still beat in my heart. They will not let me rest while there is a single Negro boy or girl without a chance to prove his worth. -Mary McLeod Bethune",
+      [
+        "You may not control all the events that happen to you, but you can decide not to be reduced by them. -Maya Angelou",
+        "The drums of Africa still beat in my heart. They will not let me rest while there is a single Negro boy or girl without a chance to prove his worth. -Mary McLeod Bethune",
         "The willow submits to the wind and prospers until one day it is many willows - a wall against the wind. -Frank Herbert", 
         "Do. OR do not. There is no try. -Yoda",
         "Any man's death diminishes me, because I am involved in mankind, and therefore never send to know for whom the bells tolls; it tolls for thee. -John Donne",
         "To be a Negro in this country and to be relatively conscious is to be in a rage almost all the time. - James Baldwin",
-        "Tough times never last. Tough people do. -Robert Schuller"];
+        "Tough times never last. Tough people do. -Robert Schuller"
+      ];
 
   // Pick a random greeting.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
@@ -176,17 +178,203 @@ async function siteEvaluationData() {
 }
 
 function createMap() {
-    // Google Campus Coordinates
-    var latitude_default = 37.422;
-    var longitude_default = -122.084;
-    var zoom_default = 16
+    // New Orleans Coordinates
+    var latitude_default = 29.9511;
+    var longitude_default = -90.0715;
+    //Map Default Settings
+    var zoom_default = 13;
+    var mapType_default = "hybird";
+    var dark_mode = [
+            {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
+            {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
+            {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
+            {
+              featureType: 'administrative.locality',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'poi',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'geometry',
+              stylers: [{color: '#263c3f'}]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#6b9a76'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'geometry',
+              stylers: [{color: '#38414e'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'geometry.stroke',
+              stylers: [{color: '#212a37'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#9ca5b3'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry',
+              stylers: [{color: '#746855'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry.stroke',
+              stylers: [{color: '#1f2835'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#f3d19c'}]
+            },
+            {
+              featureType: 'transit',
+              elementType: 'geometry',
+              stylers: [{color: '#2f3948'}]
+            },
+            {
+              featureType: 'transit.station',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'geometry',
+              stylers: [{color: '#17263c'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#515c6d'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.stroke',
+              stylers: [{color: '#17263c'}]
+            }
+          ]
 
     const map = new google.maps.Map(
         document.getElementById('map'),
         {
             center: {lat: latitude_default, lng: longitude_default}, 
-            zoom: zoom_default
+            zoom: zoom_default,
+            mapTypeID: mapType_default,
+            styles: dark_mode
         }
     );
+
+    //Add Search Bar to Map
+    var input = document.getElementById('pac-input');
+    var searchBox = new google.maps.places.SearchBox(input);
+    map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(input);
+
+    //Search Bar Functionality
+    var markers = [];
+    searchBox.addListener('places_changed', function() {
+        var places = searchBox.getPlaces();
+
+        if (places.length == 0) {
+            return;
+        }
+
+        //Clear old markers.
+        markers.forEach(function(marker) {
+            marker.setMap(null);
+        });
+        markers = [];
+
+        // Get the icon, name, and location.
+        var bounds = new google.maps.LatLngBounds();
+        places.forEach(function(place) {
+
+            var icon_size_default = 71;
+            var icon_origin_default = 0;
+            var icon_anchor_baseWidth = 17;
+            var icon_anchor_baseHeight = 37;
+            var search_scale_default = 25;
+
+            if (!place.geometry) {
+                console.log("Returned place contains no geometry");
+                return;
+            }
+            var icon = {
+            url: place.icon,
+            size: new google.maps.Size(icon_size_default, icon_size_default),
+            origin: new google.maps.Point(icon_origin_default, icon_origin_default),
+            anchor: new google.maps.Point(icon_anchor_baseWidth, icon_anchor_baseHeight),
+            scaledSize: new google.maps.Size(search_scale_default, search_scale_default)
+            };
+
+            // Create a marker
+            markers.push(new google.maps.Marker({
+                map: map,
+                icon: icon,
+                title: place.name,
+                position: place.geometry.location
+            }));
+
+            if (place.geometry.viewport) {
+                // Only geocodes have viewport.
+                bounds.union(place.geometry.viewport);} 
+            else {
+                bounds.extend(place.geometry.location);
+            }
+        });
+        map.fitBounds(bounds);
+    });
+        
+    //Generate markers for places in NOLA
+
+    generateMarkers(map);
+}
+
+//Generates a marker for the given map
+function createMarker(coordinates, map, name, info) {
+
+    //Create marker
+    var marker = new google.maps.Marker({
+        position: coordinates,
+        map: map,
+        title: name,
+    });
+
+    //Create Info Window
+    var infowindow = new google.maps.InfoWindow({
+    content: info
+    });
+
+    //OnClick Listener
+    marker.addListener('click', function() {
+        map.setZoom(18);
+        map.setCenter(marker.getPosition());
+        infowindow.open(map, marker);
+    });
+
+    return marker;
+}
+
+async function generateMarkers(map) {
+    const response = await fetch("/place-data");
+    const placeList = await response.json();
+    
+    placeList.forEach((place) => {
+        // each place object has a latitude, longitude, name, and description
+        console.log(place);
+        var coordinates = {lat: place.lat, lng: place.lng};
+
+        createMarker(coordinates, map, place.name, place.description);
+    })
 }
 
