@@ -5,8 +5,8 @@
         <title>Shawn's Portfolio</title>
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://www.gstatic.com/charts/loader.js"></script>
         <script src="script.js"></script>
-        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     </head>
     <body>
     <div id="background">
@@ -44,8 +44,7 @@
 
             <p>Lets play a game! Try to guess a random number from 0-100!</p>
             <label for="NumberInput">Input a Number:</label>
-            <input type="number" id="numberGuess" name="Number"><br><br>
-            <input type="submit" value="Guess" id="guessSubmit" onclick="guessTheNumber() ">
+            <input type="number" id="numberGuess" name="Number" onchange="guessTheNumber()"><br><br>
 
             <p>Click below to get a random Dune quote.</p>
             <button onclick="randomDuneQuote()">Quote</button>
@@ -58,16 +57,17 @@
 
             <div id="server-quote"></div></br>
 
-            <button onclick="deleteAll()">Delete All Comments</button>
+            <!--<button onclick="deleteAll()">Delete All Comments</button>-->
 
             <p>
                 If you have time, please fill out a quick <a href="survey.html">survey</a>!
             </p>
             
             <p>Want to see what others think of the site? Click below.</p>
-            <button onclick="generateGraph(siteEvaluationData())">Generate Graph</button>
+            <button onclick="drawChart()">Generate Graph</button>
             <button onclick="deleteGraph()">Delete Graph</button>
             <div id="chartContainer"></div>
+            <div id="chart-container"></div>
 
             
             
@@ -83,44 +83,4 @@
         
     </div>
     </body>
-
-<script type="text/javascript">
-
-function generateGraph(data) {
-    document.getElementById("chartContainer").style.height = "300px";
-    
-    var p = Promise.resolve(data);
-    p.then(function(v){
-
-        var chart = new CanvasJS.Chart("chartContainer", {
-		title:{
-			text: "Site Evaluations"              
-		},
-	    data: [              
-		    {
-		    type: "column",
-		    dataPoints: 
-            [
-				{ label: "Perfect",  y: v[0]  },
-			    { label: "Servicable", y: v[1] },
-			    { label: "Needs Improvements", y: v[2] },
-		    ]
-	        }
-		]
-	    });
-
-	chart.render();
-        
-    });
-    
-}
-
-function deleteGraph(){
-    const graph = document.getElementById('chartContainer');
-    graph.innerHTML="";
-    graph.style.height = "0px";
-}
-</script>
-
-
 </html>
