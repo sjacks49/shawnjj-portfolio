@@ -15,7 +15,6 @@
 package com.google.sps;
 
 import java.lang.Math;
-import java.util.HashSet;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -35,7 +34,6 @@ public final class FindMeetingQuery {
     public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
         
         Collection<String> attendees = request.getAttendees();
-        TimeRange[] valid_times = new TimeRange[0];
         ArrayList<TimeRange> invalid_times = new ArrayList<>();
 
 
@@ -53,17 +51,17 @@ public final class FindMeetingQuery {
             }
         }
 
-        invalid_times = resolveContains(invalid_times);
+        invalid_times = resolveOverlaps(invalid_times);
 
+        ArrayList<TimeRange> valid_times = generateValidTimes(invalid_times, request.getDuration());
         
-        TimeRange[] ret = new TimeRange[invalid_times.size()];
-        ret = invalid_times.toArray(ret);
+        TimeRange[] ret = new TimeRange[valid_times.size()];
+        ret = valid_times.toArray(ret);
 
         return Arrays.asList(ret);
     }
 
-    public ArrayList<TimeRange> resolveContains(ArrayList<TimeRange> ranges) {
-
+    public ArrayList<TimeRange> resolveOverlaps(ArrayList<TimeRange> ranges) {
         ListIterator<TimeRange> it = ranges.listIterator();    
         if (it.hasNext()) {  
             TimeRange range1 = it.next();
@@ -73,8 +71,15 @@ public final class FindMeetingQuery {
                 if (range1.equals(range2)){}
 
                 else {
-                    if (range1.contains(range2)) ranges.remove(range2);
-                    else if (range2.contains(range1)) ranges.remove(range1);
+                    if (range1.overlaps(range2)) {
+                        int start = Math.min(range1.start(), range2.start());
+                        int end  = Math.max(range1.end(), range2.end());
+                        int replace_index = ranges.indexOf(range1);
+
+                        TimeRange combined_range = TimeRange.fromStartEnd(start, end, false);
+                        ranges.set(replace_index, combined_range);
+                        ranges.remove(range2);
+                    }
                 }
 
             }
@@ -83,7 +88,25 @@ public final class FindMeetingQuery {
         return ranges;
     }
 
-    public ArrayList
+    public ArrayList<TimeRange> generateValidTimes(ArrayList<TimeRange> ranges, long duration) {
+        int start_time = TimeRange.START_OF_DAY;
+        ArrayList<TimeRange> valid_times = new ArrayList<>();
+
+        for (TimeRange range : ranges) {
+            TimeRange valid = TimeRange.fromStartEnd(start_time, range.start(), false);
+            if ( (long) valid.duration() >= duration) {
+                valid_times.add(valid);
+            }
+            start_time = range.end();
+        }
+
+        TimeRange final_range = TimeRange.fromStartEnd(start_time, TimeRange.END_OF_DAY, true);
+        if (final_range.duration() != 0) {
+            valid_times.add(final_range);
+        }
+
+        return valid_times;
+    }
 
 
 
