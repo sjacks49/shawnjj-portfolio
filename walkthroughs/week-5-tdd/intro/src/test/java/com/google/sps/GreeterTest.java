@@ -22,19 +22,22 @@ import org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 public final class GreeterTest {
 
+    String VALID_NAME = "Ada";
+    String VALID_NAME_SPACES = "  Ada  ";
+
     @Test
-    public void testGreeting() {
+    public void testGreet_validName_returnsHelloName() {
         Greeter greeter = new Greeter();
 
-        String greeting = greeter.greet("Ada");
+        String greeting = greeter.greet(VALID_NAME);
 
         Assert.assertEquals("Hello Ada", greeting);
     }
 
     @Test
-    public void testGreetingTrimWhitespaces() {
+    public void testGreet_validName_removesWhiteSpace() {
         Greeter greeter = new Greeter();
-        Assert.assertEquals("Hello Ada", greeter.greet("  Ada  $"));
+        Assert.assertEquals("Hello Ada", greeter.greet(VALID_NAME_SPACES));
     }
   
 }

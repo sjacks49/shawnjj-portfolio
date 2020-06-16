@@ -38,7 +38,8 @@ public final class FindMeetingQuery {
 
 
         // Returns appropriate values for no attendees and invalid meeting length
-        int full_day = 24*60;
+        int full_day = TimeRange.WHOLE_DAY.duration();
+
         if (attendees.size() == 0) attendees = request.getOptionalAttendees();
         if (request.getDuration() > full_day) return Arrays.asList();
         
