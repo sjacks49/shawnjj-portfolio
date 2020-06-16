@@ -106,10 +106,7 @@ async function fetchFromServer(max_comments) {
   var output = "";
   for(var ndx = 0; ndx < max; ndx++){
     commentListElement.appendChild(createCommentElement(json_surveys[ndx]));
-
   }
-  
-  
 }
 
 async function deleteComment(survey) {
@@ -124,7 +121,7 @@ function createCommentElement(survey) {
 
   const commentElement = document.createElement('span');
   commentElement.insertAdjacentText("beforeend", "");
-  commentElement.innerText = survey.comment;
+  commentElement.innerText = survey.name + ": " + survey.comment;
 
   const deleteButtonElement = document.createElement('button');
   deleteButtonElement.innerText = 'Delete';
@@ -136,7 +133,7 @@ function createCommentElement(survey) {
   });
 
   listElement.appendChild(commentElement);
-  listElement.appendChild(deleteButtonElement);
+  //listElement.appendChild(deleteButtonElement);
   return listElement;
 }
 
@@ -356,8 +353,9 @@ function createMarker(coordinates, map, name, info) {
     });
 
     //OnClick Listener
+    const zoom_building = 18;
     marker.addListener('click', function() {
-        map.setZoom(18);
+        map.setZoom(zoom_building);
         map.setCenter(marker.getPosition());
         infowindow.open(map, marker);
     });
@@ -378,3 +376,44 @@ async function generateMarkers(map) {
     })
 }
 
+google.charts.load('current', {'packages':['corechart']});
+//google.charts.setOnLoadCallback(drawChart);
+
+/* Creates a chart and adds it to the page. */
+function drawChart() {
+    const page_width = 650;
+    const default_height = 400;
+
+    const data = new google.visualization.DataTable();
+    const promise = Promise.resolve(siteEvaluationData());
+    
+    //evals = [perfect, servicable, needs improvements]
+    promise.then((evals) => {
+        console.log(evals);
+
+        data.addColumn('string', 'Evaluation');
+        data.addColumn('number', 'Count');
+            data.addRows([
+                ['Perfect', evals[0]],
+                ['Servicable', evals[1]],
+                ['Needs Improvements', evals[2]]
+            ]);
+
+        const options = {
+            'title': 'Site Evaluations',
+            'width': page_width,
+            'height': default_height,
+            'backgroundColor': 'lightblue'
+        };
+
+        const chart = new google.visualization.PieChart(
+            document.getElementById('chartContainer'));
+        chart.draw(data, options);
+    });
+}
+
+function deleteGraph() {
+    const graph = document.getElementById("chartContainer");
+    graph.innerHTML = "";
+    graph.style.height = "0px";
+}
