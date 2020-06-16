@@ -38,22 +38,26 @@ public final class FindMeetingQuery {
 
 
         // Returns appropriate values for no attendees and invalid meeting length
-        if (attendees.size() == 0) return Arrays.asList(TimeRange.WHOLE_DAY);
-        if (request.getDuration() > 24*60) return Arrays.asList();
+        int full_day = 24*60;
+        if (attendees.size() == 0) attendees = request.getOptionalAttendees();
+        if (request.getDuration() > full_day) return Arrays.asList();
+        
         
 
-        //Generates a list of invalid timeslots
-        for (String name : attendees) {
-            for (Event event : events) {
-                if (event.getAttendees().contains(name)) {
-                    invalid_times.add(event.getWhen());
-                }
-            }
-        }
+        //Generates a list of invalid timeslots for madatory
+        invalid_times = generateInvalidTimes(events, attendees);
 
         invalid_times = resolveOverlaps(invalid_times);
 
         ArrayList<TimeRange> valid_times = generateValidTimes(invalid_times, request.getDuration());
+
+        ArrayList<TimeRange> invalid_optional = generateInvalidTimes(events, request.getOptionalAttendees());
+
+        for (TimeRange invalid : invalid_optional){ 
+            for (TimeRange valid : valid_times) {
+                if (invalid.equals(valid)) valid_times.remove(invalid);
+            }
+        }
         
         TimeRange[] ret = new TimeRange[valid_times.size()];
         ret = valid_times.toArray(ret);
@@ -68,6 +72,7 @@ public final class FindMeetingQuery {
 
             if (it.hasNext()) {
                 TimeRange range2 = it.next();
+                
                 if (range1.equals(range2)){}
 
                 else {
@@ -106,6 +111,20 @@ public final class FindMeetingQuery {
         }
 
         return valid_times;
+    }
+
+    public ArrayList<TimeRange> generateInvalidTimes(Collection<Event> events, Collection<String> attendees) {
+        ArrayList<TimeRange> times = new ArrayList<>();
+
+        for (String name : attendees) {
+            for (Event event : events) {
+                if (event.getAttendees().contains(name)) {
+                    times.add(event.getWhen());
+                }
+            }
+        }
+
+        return times;
     }
 
 
